@@ -3,5 +3,7 @@
     "description": "Developpement d'une application web",
     "type": "project",
     "license": "WTFPL",
-    "require": {}
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.75"
+    }
 }
