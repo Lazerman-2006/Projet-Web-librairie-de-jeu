@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity;
+namespace Entity\Collection;
 
 use Database\MyPdo;
 use Entity\Categorie;
@@ -21,7 +21,7 @@ class CategorieCollection
         $stmt = MyPdo::getInstance()->prepare(
             <<<'SQL'
             SELECT id,description
-            FROM categorie
+            FROM category
             WHERE id = :categorieId
             SQL
         );
@@ -35,7 +35,7 @@ class CategorieCollection
         $stmt = MyPdo::getInstance()->prepare(
             <<<'SQL'
             SELECT id,description
-            FROM categorie
+            FROM category
             SQL
         );
         $stmt->execute();
