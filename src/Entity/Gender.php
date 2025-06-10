@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Entity;
 
+use Database\MyPdo;
+use PDO;
+
 class Gender
 {
 
@@ -53,6 +56,20 @@ class Gender
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public static function findDescById(int $genderId): string
+    {
+        $gender = MyPdo::getInstance()->prepare(
+            <<<'SQL'
+            SELECT description
+            FROM genre
+            WHERE id = :genderId
+            SQL
+        );
+        $gender->execute(['genderId' => $genderId]);
+
+        return $gender->fetchColumn();
     }
 
 
