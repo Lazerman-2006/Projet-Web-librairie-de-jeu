@@ -10,5 +10,8 @@
         "start:linux": ["bash bin/run-server.sh"],
         "start:windows": ["bin/run-server.bat"],
         "start": ["composer start:linux"]
+    },
+    "require": {
+        "ext-pdo": "*"
     }
 }
