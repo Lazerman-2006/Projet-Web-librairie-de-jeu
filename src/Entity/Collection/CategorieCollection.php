@@ -4,7 +4,6 @@ namespace Entity;
 
 use Database\MyPdo;
 use Entity\Categorie;
-
 use PDO;
 
 /**
@@ -27,6 +26,19 @@ class CategorieCollection
             SQL
         );
         $stmt->execute(['categorieId' => $categorieId]);
+
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Categorie::class);
+    }
+
+    public static function findAllCategorie(): array
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            <<<'SQL'
+            SELECT id,description
+            FROM categorie
+            SQL
+        );
+        $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_CLASS, Categorie::class);
     }
