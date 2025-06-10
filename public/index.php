@@ -17,14 +17,14 @@ $Gender = GenderCollection::findAllGender();
 
 foreach ($Categorie as $category) {
     $id = $category->getId();
-    $name = $webpage->escapeString($category->getName());
+    $name = $webpage->escapeString($category->getDescription());
     $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name,'</a></p>");
 }
 
 foreach ($Gender as $gender) {
     $id = $gender->getId();
-    $name = $webpage->escapeString($gender->getName());
-    $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name,'</a></p>");
+    $name = $webpage->escapeString($gender->getDescription());
+    $webpage->appendContent("<p> <a href=\"genre.php?genreId=$id\">$name,'</a></p>");
 }
 
 echo $webpage->toHTML();
