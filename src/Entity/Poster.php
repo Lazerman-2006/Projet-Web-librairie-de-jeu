@@ -35,7 +35,28 @@ class Poster
     }
 
 
-   
+    /**
+     * Récupère un objet Poster avec un id
+     *
+     * @param int $id
+     * @return Poster
+     */
+    public static function findById(int $id): Poster
+    {
+        $poster = MyPdo::getInstance()->prepare(
+            <<<SQL
+            SELECT id, jpeg
+            FROM cover
+            WHERE id = :id
+            SQL
+        );
+        $poster->execute([':id' => $id]);
+
+        $poster->setFetchMode(PDO::FETCH_CLASS, Poster::class);
+        $poster_return = $poster->fetch();
+
+        return $poster_return;
+    }
 
 
 
