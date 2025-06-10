@@ -33,7 +33,7 @@ class GenderCollection
         return $gender->fetchAll(PDO::FETCH_CLASS, Gender::class);
     }
 
-    public static function findAllCollection(): array
+    public static function findAllGender(): array
     {
         $stmt = MyPdo::getInstance()->prepare(
             <<<'SQL'
