@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 
 use Entity\AppWebPage;
+use Entity\CategorieCollection;
 use Entity\Collection\GameCollection;
 
 $webpage = new AppWebPage("Liste des artistes");
 
-$games = GameCollection::findAll();
+$games = CategorieCollection::findAllCategorie();
 
 
 
