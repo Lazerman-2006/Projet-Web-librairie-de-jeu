@@ -1,13 +1,13 @@
 <?php
 
 declare(strict_types=1);
-namespace Entity;
+
 
 use Entity\AppWebPage;
 use Entity\Collection\CategorieCollection;
 use Entity\Collection\GenderCollection;
 
-$webpage = new AppWebPage("Jeux vidéos");
+$webpage = new AppWebPage("Liste des artistes");
 
 $Categorie = CategorieCollection::findAllCategorie();
 
