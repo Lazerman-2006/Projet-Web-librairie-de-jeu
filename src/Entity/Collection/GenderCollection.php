@@ -38,7 +38,7 @@ class GenderCollection
         $stmt = MyPdo::getInstance()->prepare(
             <<<'SQL'
             SELECT id,description
-            FROM gende
+            FROM genre
             SQL
         );
         $stmt->execute();
