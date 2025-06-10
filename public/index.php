@@ -14,13 +14,14 @@ $Categorie = CategorieCollection::findAllCategorie();
 $Gender = GenderCollection::findAllGender();
 
 
-
+$webpage->appendContent("Genres");
 foreach ($Categorie as $category) {
     $id = $category->getId();
     $name = $webpage->escapeString($category->getDescription());
-    $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name,'</a></p>");
+    $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name</a></p>");
 }
 
+$webpage->appendContent("Catégories");
 foreach ($Gender as $gender) {
     $id = $gender->getId();
     $name = $webpage->escapeString($gender->getDescription());
