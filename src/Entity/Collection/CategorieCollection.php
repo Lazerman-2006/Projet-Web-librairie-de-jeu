@@ -23,7 +23,7 @@ class CategorieCollection
             <<<'SQL'
             SELECT id,description
             FROM categorie
-            WHERE categorieId = :categorieId
+            WHERE id = :categorieId
             SQL
         );
         $stmt->execute(['categorieId' => $categorieId]);

@@ -22,7 +22,7 @@ class GenderCollection
             <<<'SQL'
             SELECT id, description
             FROM genre
-            WHERE genderId = :genderId
+            WHERE id = :genderId
             SQL
         );
         $gender->execute(['genderId' => $genderId]);
