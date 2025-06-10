@@ -10,6 +10,12 @@ use PDO;
 
 class GenderCollection
 {
+    /**
+     * Cherche un Gender avec un id
+     *
+     * @param int $genderId
+     * @return array
+     */
     public static function findByGenderId(int $genderId): array
     {
         $gender = MyPdo::getInstance()->prepare(
