@@ -18,4 +18,8 @@ foreach ($game as $each) {
     $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name,'</a></p>");
 }
 
+# Obtenir le genre dans le titre de la page
+$genre = \Entity\Categorie::findDescById($categorieId);
+$webpage->setTitle("Jeux vidéos : $genre");
+
 echo $webpage->toHTML();

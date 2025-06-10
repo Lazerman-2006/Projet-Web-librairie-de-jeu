@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 namespace Entity;
+use Database\MyPdo;
+
 /**
  * Class catégorie qui représente les catégories des jeux vidéos
  */
@@ -47,6 +49,20 @@ class Categorie
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public static function findDescById(int $catId): string
+    {
+        $gender = MyPdo::getInstance()->prepare(
+            <<<'SQL'
+            SELECT description
+            FROM category
+            WHERE id = :categoryId
+            SQL
+        );
+        $gender->execute(['categoryId' => $catId]);
+
+        return $gender->fetchColumn();
     }
 
 
