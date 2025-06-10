@@ -24,7 +24,7 @@ foreach ($Categorie as $category) {
 foreach ($Gender as $gender) {
     $id = $gender->getId();
     $name = $webpage->escapeString($gender->getDescription());
-    $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name,'</a></p>");
+    $webpage->appendContent("<p> <a href=\"genre.php?genreId=$id\">$name,'</a></p>");
 }
 
 echo $webpage->toHTML();

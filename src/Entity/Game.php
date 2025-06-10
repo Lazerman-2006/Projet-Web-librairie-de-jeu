@@ -17,7 +17,7 @@ class Game
     private bool $windows;
     private bool $linux;
     private bool $mac;
-    private int $metacritic;
+    private ?int $metacritic ;
     private int $developerId;
     private int $posterId;
 
