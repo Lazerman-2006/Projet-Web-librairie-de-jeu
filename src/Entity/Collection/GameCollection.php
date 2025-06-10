@@ -11,6 +11,18 @@ use PDO;
 
 class GameCollection
 {
-    
+    public static function findByGameId(int $gameId): array
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            <<<'SQL'
+            SELECT id,name,releaseYear,shortDescription,price,windows,linux,mac,metacritic,developerId,posterId
+            FROM game
+            WHERE id = :gameId
+            SQL
+        );
+        $stmt->execute(['gameId' => $gameId]);
+
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Game::class);
+    }
 
 }
