@@ -52,6 +52,12 @@ class Developer
         $this->name = $name;
     }
 
+    /**
+     * Permet de récupérer un déveuloper à parti d'un id
+     *
+     * @param int $id
+     * @return Developer|null
+     */
     public static function findById(int $id): ?Developer
     {
         $dev = MyPdo::getInstance()->prepare(
