@@ -12,8 +12,11 @@ $categorieId = (int) $_GET['categorieId'];
 
 $game = GameCategoryCollection::findGameByCategoryId($categorieId);
 
-$webpage->appendContent("<div class = category_game>");
+$webpage->appendContent('<div class="bouton">');
+$webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
+$webpage->appendContent('</div>');
 
+$webpage->appendContent("<div class = category_game>");
 foreach ($game as $each) {
     $poster = Poster::findById($each->getPosterId());
     $jpeg = $poster->getJpeg();

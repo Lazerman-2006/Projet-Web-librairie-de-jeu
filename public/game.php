@@ -3,7 +3,11 @@
 declare(strict_types=1);
 
 use Entity\AppWebPage;
+use Entity\Collection\CategorieCollection;
+use Entity\Collection\GameCategoryCollection;
 use Entity\Collection\GameCollection;
+use Entity\Collection\GenderCollection;
+use Entity\GameGenreCollection;
 use Entity\Poster;
 
 /**
@@ -24,6 +28,7 @@ foreach ($games as $game) {
 
     #Name
     $name = $webpage->escapeString($game->getName());
+    $webpage->setTitle("Jeux vidéos : $name");
 
     #Prix
 
@@ -81,10 +86,24 @@ foreach ($games as $game) {
 
     # Affichage cat et genres
 
+    $game = GameCategoryCollection::findCategoryIdByGameId($gameId);
+    $webpage->appendContent("Categorie");
+    foreach ($game as $gamesCat) {
+        $id = $gamesCat->getId();
+        $name = $webpage->escapeString($gamesCat->getDescription());
+        $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name</a></p>");
+    }
+    $webpage->appendContent("Genres");
+    $game = GameGenreCollection::findGenreIdByGameId($gameId);
+    foreach ($game as $gamesGenre) {
+        $id = $gamesGenre->getId();
+        $name = $webpage->escapeString($gamesGenre->getDescription());
+        $webpage->appendContent("<p> <a href=\"genre.php?genreId=$id\">$name</a></p>");
+    }
 
-    # Obtenir le titre du jeu dans le titre de la page
-    $webpage->setTitle("Jeux vidéos : $name");
-
+    $webpage->appendContent('<div class="bouton">');
+    $webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
+    $webpage->appendContent('</div>');
 
 
     echo $webpage->toHTML();
