@@ -30,6 +30,11 @@ class CategorieCollection
         return $stmt->fetchAll(PDO::FETCH_CLASS, Categorie::class);
     }
 
+    /**
+     * Permet de récupérer la totalité des catégories de la base de données
+     *
+     * @return array
+     */
     public static function findAllCategorie(): array
     {
         $stmt = MyPdo::getInstance()->prepare(
