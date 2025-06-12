@@ -7,6 +7,9 @@ namespace Entity;
 use Database\MyPdo;
 use PDO;
 
+/**
+ * Class qui représente un genre
+ */
 class Gender
 {
 
@@ -58,6 +61,12 @@ class Gender
         $this->description = $description;
     }
 
+    /**
+     * Permet de Récupérer la description d'un genre à parti de son id
+     *
+     * @param int $genderId
+     * @return string
+     */
     public static function findDescById(int $genderId): string
     {
         $gender = MyPdo::getInstance()->prepare(
