@@ -9,10 +9,13 @@ use Entity\Categorie;
 use Entity\Gender;
 use PDO;
 
+/**
+ * Permet de récupérer de tout ce qui concerne la table genre
+ */
 class GenderCollection
 {
     /**
-     * Cherche un Gender avec un id
+     * Cherche un genre avec un id
      *
      * @param int $genderId
      * @return array
@@ -33,6 +36,11 @@ class GenderCollection
         return $gender->fetchAll(PDO::FETCH_CLASS, Gender::class);
     }
 
+    /**
+     * Permet de récupérer tout les genres de jeux
+     *
+     * @return array
+     */
     public static function findAllGender(): array
     {
         $stmt = MyPdo::getInstance()->prepare(
