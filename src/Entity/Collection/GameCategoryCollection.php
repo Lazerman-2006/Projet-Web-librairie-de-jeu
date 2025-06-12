@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Entity\Collection;
 
 use Database\MyPdo;
+use Entity\Categorie;
 use Entity\Game;
 use PDO;
 
@@ -29,22 +30,28 @@ class GameCategoryCollection
         return $game->fetchAll(PDO::FETCH_CLASS, Game::class);
     }
 
-    public static function findCategoryBygameId(int $gameId): array
+    public static function findCategoryIdByGameId(int $gameId): array
     {
-        $game = MyPdo::getInstance()->prepare(
+        $category = MyPdo::getInstance()->prepare(
             <<<'SQL'
-            SELECT *
-            FROM category
-            WHERE id in (SELECT categoryid
-                         FROM game_category
-                         WHERE gameId in (SELECT id
-                                              FROM game
-                                              WHERE id = :gameId)) 
-            SQL
+        SELECT *
+        FROM category
+        WHERE id IN (
+            SELECT categoryid
+            FROM game_category
+            WHERE gameid IN (
+                SELECT id
+                FROM game
+                WHERE id = :gameId
+            )
+        ) 
+        SQL
         );
-        $game->execute(['gameId' => $gameId]);
 
-        return $game->fetchAll(PDO::FETCH_CLASS, Game::class);
+        $category->execute(['gameId' => $gameId]);
+
+        return $category->fetchAll(PDO::FETCH_CLASS, Categorie::class);
     }
+
 
 }
