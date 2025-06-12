@@ -21,8 +21,16 @@ if ($genreId === null || $genreId <= 0) {
     die("Genre ID invalide.");
 }
 
+$webpage->appendContent('<form method="GET" class="sort-menu">');
+$webpage->appendContent('<input type="hidden" name="genreId" value="' . $genreId . '">'); // Ajoute genreId
+$webpage->appendContent('<label><input type="radio" name="orderBy" value="title" checked> Trier par titre</label>');
+$webpage->appendContent('<label><input type="radio" name="orderBy" value="year"> Trier par année</label>');
+$webpage->appendContent('<button type="submit">Appliquer le tri</button>');
+$webpage->appendContent('</form>');
+$orderBy = $_GET['orderBy'] ?? 'title'; // Récupère l'option de tri
 
-$games = GameGenreCollection::findGameByGenreId($genreId);
+
+$games = GameGenreCollection::findGameByGenreId($genreId, $orderBy);
 
 foreach ($games as $game) {
     $id = $game->getId();

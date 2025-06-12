@@ -13,18 +13,22 @@ class GameGenreCollection
      * @param int $genreId L'id du genre utiliser pour rechercher les jeux
      * @return array Retourne l'ensemble des jeux
      */
-    public static function findGameByGenreId(int $genreId): array
+    public static function findGameByGenreId(int $genreId, string $orderBy = 'title'): array
+
     {
+
+        $orderColumn = $orderBy === 'year' ? 'g.release_year' : 'g.name';
+
         $stmt = MyPdo::getInstance()->prepare(
             <<<'SQL'
             SELECT g.*
             FROM game g
             INNER JOIN game_genre gg ON g.id = gg.gameId
             WHERE gg.genreId = :genreId
+            ORDER BY " . $orderColumn . " ASC
             SQL
         );
         $stmt->execute(['genreId' => $genreId]);
-
         return $stmt->fetchAll(PDO::FETCH_CLASS, Game::class);
     }
 
