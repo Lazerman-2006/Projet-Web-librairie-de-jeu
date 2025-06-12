@@ -238,7 +238,7 @@ class Game
      *
      * @return void
      */
-    public function deleteGame(): void
+    public static function deleteGame($id): void
     {
         $game = MyPdo::getInstance()->prepare(
             <<<SQL
@@ -246,7 +246,7 @@ class Game
             WHERE id = :id
             SQL
         );
-        $game->execute([':id' => $this->id]);
+        $game->execute([':id' => $id]);
     }
 
     public function insertGame(int $id ,string $name,int $releaseYear,string $shortDescription,int $price,bool $windows,bool $linux,bool $mac,?int $metacritic,?int $developerId,?int $posterId): void
