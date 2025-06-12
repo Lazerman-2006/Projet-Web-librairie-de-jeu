@@ -5,7 +5,7 @@ namespace Entity;
 use Database\MyPdo;
 use PDO;
 
-class Game_Genre
+class GameGenreCollection
 {
 
     /**
@@ -26,5 +26,28 @@ class Game_Genre
         $stmt->execute(['genreId' => $genreId]);
 
         return $stmt->fetchAll(PDO::FETCH_CLASS, Game::class);
+    }
+
+    public static function findGenreIdByGameId(int $gameId): array
+    {
+        $category = MyPdo::getInstance()->prepare(
+            <<<'SQL'
+        SELECT *
+        FROM genre
+        WHERE id IN (
+            SELECT genreid
+            FROM game_genre
+            WHERE gameid IN (
+                SELECT id
+                FROM game
+                WHERE id = :gameId
+            )
+        ) 
+        SQL
+        );
+
+        $category->execute(['gameId' => $gameId]);
+
+        return $category->fetchAll(PDO::FETCH_CLASS, Categorie::class);
     }
 }
