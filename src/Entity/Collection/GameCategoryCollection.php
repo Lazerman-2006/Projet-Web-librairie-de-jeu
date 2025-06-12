@@ -9,9 +9,18 @@ use Entity\Categorie;
 use Entity\Game;
 use PDO;
 
+/**
+ * Permet de récupérer de tout ce qui concerne la table game_category
+ */
 class GameCategoryCollection
 {
 
+    /**
+     * Permet de récupérer les jeux avce l'id de catégories
+     *
+     * @param int $categorieId
+     * @return array
+     */
     public static function findGameByCategoryId(int $categorieId): array
     {
         $game = MyPdo::getInstance()->prepare(
@@ -30,6 +39,12 @@ class GameCategoryCollection
         return $game->fetchAll(PDO::FETCH_CLASS, Game::class);
     }
 
+    /**
+     * Permet de récupérer les catégories avec l'id de jeu
+     *
+     * @param int $gameId
+     * @return array
+     */
     public static function findCategoryIdByGameId(int $gameId): array
     {
         $category = MyPdo::getInstance()->prepare(
