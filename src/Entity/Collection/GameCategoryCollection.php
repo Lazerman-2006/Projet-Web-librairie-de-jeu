@@ -29,4 +29,22 @@ class GameCategoryCollection
         return $game->fetchAll(PDO::FETCH_CLASS, Game::class);
     }
 
+    public static function findCategoryBygameId(int $gameId): array
+    {
+        $game = MyPdo::getInstance()->prepare(
+            <<<'SQL'
+            SELECT *
+            FROM category
+            WHERE id in (SELECT categoryid
+                         FROM game_category
+                         WHERE gameId in (SELECT id
+                                              FROM game
+                                              WHERE id = :gameId)) 
+            SQL
+        );
+        $game->execute(['gameId' => $gameId]);
+
+        return $game->fetchAll(PDO::FETCH_CLASS, Game::class);
+    }
+
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Entity;
 use Database\MyPdo;
+use PDO;
 
 /**
  * Class catégorie qui représente les catégories des jeux vidéos
@@ -64,6 +65,22 @@ class Categorie
 
         return $gender->fetchColumn();
     }
+
+    public static function findByGameId(int $gameId): array
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            <<<SQL
+        SELECT c.id, c.description
+        FROM category c
+        JOIN game_category gc ON gc.category_id = c.id
+        WHERE gc.game_id = :gameId
+        SQL
+        );
+        $stmt->execute(['gameId' => $gameId]);
+
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Categorie::class);
+    }
+
 
 
 
