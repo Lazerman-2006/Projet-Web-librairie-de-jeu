@@ -6,6 +6,7 @@ use Entity\Game_Genre;
 use Entity\AppWebPage;
 use Entity\Collection\GenderCollection;
 use Entity\Gender;
+use Entity\Poster;
 
 /**
  *  Permet d'afficher la page Genre (Affiche tout les jeux qui font partie d'un genre)
@@ -22,11 +23,21 @@ if ($genreId === null || $genreId <= 0) {
 
 $games = Game_Genre::findGameByGenreId($genreId);
 
+$webpage->appendContent("<div class = genre_game>");
+
 foreach ($games as $game) {
+    $poster = Poster::findById($game->getPosterId());
+    $jpeg = $poster->getJpeg();
+    $base64 = base64_encode($jpeg);
+    $image = '<img src="data:image/jpeg;base64,' . $base64 . '" alt="Poster">';
     $id = $game->getId();
     $name = $webpage->escapeString($game->getName());
-    $webpage->appendContent("<p><a href=\"game.php?gameId=$id\">$name</a></p>");
+    $year = $game->getReleaseYear();
+    $description = $game->getShortDescription();
+    $webpage->appendContent("<div><p>{$image} <a href=\"game.php?gameId=$id\">$name $year </a></div>$description</p>");
 }
+
+$webpage->appendContent("</div>");
 
 # Obtenir le genre dans le titre de la page
 $genre = Gender::findDescById($genreId);
