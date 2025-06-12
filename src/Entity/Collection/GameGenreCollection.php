@@ -14,23 +14,29 @@ class GameGenreCollection
      * @return array Retourne l'ensemble des jeux
      */
     public static function findGameByGenreId(int $genreId, string $orderBy = 'title'): array
-
     {
+        // Sécurisation du tri
+        $allowedOrders = ['title', 'year'];
+        if (!in_array($orderBy, $allowedOrders)) {
+            $orderBy = 'title'; // Défaut : tri par titre
+        }
 
-        $orderColumn = $orderBy === 'year' ? 'g.release_year' : 'g.name';
+        // Détermination de la colonne de tri
+        $orderColumn = ($orderBy === 'year') ? 'g.release_year' : 'g.name';
 
-        $stmt = MyPdo::getInstance()->prepare(
-            <<<'SQL'
-            SELECT g.*
-            FROM game g
-            INNER JOIN game_genre gg ON g.id = gg.gameId
-            WHERE gg.genreId = :genreId
-            ORDER BY " . $orderColumn . " ASC
-            SQL
-        );
+        // Préparation et exécution de la requête
+        $stmt = MyPdo::getInstance()->prepare("
+        SELECT g.*
+        FROM game g
+        INNER JOIN game_genre gg ON g.id = gg.gameId
+        WHERE gg.genreId = :genreId
+        ORDER BY $orderColumn ASC
+    ");
+
         $stmt->execute(['genreId' => $genreId]);
         return $stmt->fetchAll(PDO::FETCH_CLASS, Game::class);
     }
+
 
     public static function findGenreIdByGameId(int $gameId): array
     {
