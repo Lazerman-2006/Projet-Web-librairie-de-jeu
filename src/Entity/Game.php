@@ -261,6 +261,12 @@ class Game
 
     }
 
+    public function updateGame(): void
+    {
+
+    }
+
+
 
 
 
