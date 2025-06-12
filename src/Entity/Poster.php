@@ -7,6 +7,9 @@ namespace Entity;
 use Database\MyPdo;
 use PDO;
 
+/**
+ * Class qui représente un Poster
+ */
 class Poster
 {
     private int $id;
