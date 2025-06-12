@@ -1,41 +1,55 @@
-/* Style général */
 body {
     padding-top: 175px;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    color: #333;
     margin: 0;
     padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
-/* Contenu principal */
 .content {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Liste des jeux */
+
 .list {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
 }
 
-.album {
+
+.jeux {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 10px;
     padding: 15px;
     width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
 
-.album a {
+.jeux a {
+    display: flex;
     text-decoration: none;
-    color: #6200ea;
+    color: #66c0f4;
     font-weight: bold;
+    border : solid;
+    border-radius: 10px;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    text-align: center;
+    justify-content: center;
 }
+
 
 .header {
     background-color: #6200ea;
@@ -47,9 +61,11 @@ body {
     width: 100%;
     top: 0;
     z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Footer fixe */
 .footer {
     text-align: center;
     padding: 10px;
@@ -59,4 +75,31 @@ body {
     width: 100%;
     bottom: 0;
     z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (orientation: landscape) {
+
+    .jeux {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        width: auto;
+        height: auto;
+
+    }
+
+
+
+
+
+
+
 }
