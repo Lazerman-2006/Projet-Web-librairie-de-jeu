@@ -37,10 +37,10 @@ class AppWebPage extends WebPage
     </div>
     <div class="content">
         <div class="list">
-            <div class ="album">
-                <a>
+            <div class ="jeux">
+                
                 {$content} 
-                </a>
+                
             </div>
         </div>
     </div>
