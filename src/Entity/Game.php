@@ -249,6 +249,23 @@ class Game
         $game->execute([':id' => $id]);
     }
 
+    /**
+     *
+     * Permet de rajouter un jeu
+     *
+     * @param int $id
+     * @param string $name
+     * @param int $releaseYear
+     * @param string $shortDescription
+     * @param int $price
+     * @param bool $windows
+     * @param bool $linux
+     * @param bool $mac
+     * @param int|null $metacritic
+     * @param int|null $developerId
+     * @param int|null $posterId
+     * @return void
+     */
     public function insertGame(int $id ,string $name,int $releaseYear,string $shortDescription,int $price,bool $windows,bool $linux,bool $mac,?int $metacritic,?int $developerId,?int $posterId): void
     {
         $game = MyPdo::getInstance()->prepare(
@@ -261,6 +278,11 @@ class Game
 
     }
 
+    /**
+     * Permet de mettre à jour la page d'un jeu
+     *
+     * @return void
+     */
     public function updateGame(): void
     {
 
