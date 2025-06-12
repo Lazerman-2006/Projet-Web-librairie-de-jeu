@@ -52,6 +52,12 @@ class Categorie
         $this->description = $description;
     }
 
+    /**
+     * Récupère la description d'une catégorie à parti de son id
+     *
+     * @param int $catId
+     * @return string
+     */
     public static function findDescById(int $catId): string
     {
         $gender = MyPdo::getInstance()->prepare(
@@ -66,6 +72,12 @@ class Categorie
         return $gender->fetchColumn();
     }
 
+    /**
+     * Permet de récupérer des catégories à parit de lid d'un jeux
+     *
+     * @param int $gameId
+     * @return array
+     */
     public static function findByGameId(int $gameId): array
     {
         $stmt = MyPdo::getInstance()->prepare(
