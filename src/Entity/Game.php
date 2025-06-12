@@ -4,22 +4,24 @@ declare(strict_types=1);
 
 namespace Entity;
 
+use Database\MyPdo;
+
 /**
  * Class Game qui représente un jeu vidéo.
  */
 class Game
 {
-    private int $id;
-    private string $name;
-    private int $releaseYear;
-    private string $shortDescription;
-    private int $price;
-    private bool $windows;
-    private bool $linux;
-    private bool $mac;
-    private ?int $metacritic ;
-    private ?int $developerId;
-    private int $posterId;
+    private int $id = 0;
+    private string $name = "";
+    private int $releaseYear = 0;
+    private string $shortDescription = "";
+    private int $price = 0;
+    private bool $windows = false;
+    private bool $linux = false;
+    private bool $mac = false;
+    private ?int $metacritic = null;
+    private ?int $developerId = null;
+    private ?int $posterId = null;
 
     /**
      * Permet d'obtenir l'identifiant du jeu.
@@ -229,4 +231,25 @@ class Game
     {
         $this->posterId = $posterId;
     }
+
+
+    /**
+     * Cette fonction permet de supprimer la ligne d'un jeu sur la base de données
+     *
+     * @return void
+     */
+    public function deleteGame(): void
+    {
+        $game = MyPdo::getInstance()->prepare(
+            <<<SQL
+            DELETE FROM game
+            WHERE id = :id
+            SQL
+        );
+        $game->execute([':id' => $this->id]);
+    }
+
+
+
+
 }
