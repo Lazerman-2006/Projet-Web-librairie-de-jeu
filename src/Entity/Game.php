@@ -177,7 +177,7 @@ class Game
      * Permet d'obtenir la note Metacritic du jeu.
      * @return int La note Metacritic.
      */
-    public function getMetacritic(): int
+    public function getMetacritic(): ?int
     {
         return $this->metacritic;
     }

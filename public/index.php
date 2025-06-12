@@ -14,18 +14,19 @@ $Categorie = CategorieCollection::findAllCategorie();
 $Gender = GenderCollection::findAllGender();
 
 
-$webpage->appendContent("Genres");
+
+$webpage->appendContent("Genre");
+foreach ($Gender as $gender) {
+    $id = $gender->getId();
+    $name = $webpage->escapeString($gender->getDescription());
+    $webpage->appendContent("<p> <a href=\"genre.php?genreId=$id\">$name</a></p>");
+}
+
+$webpage->appendContent("Categorie");
 foreach ($Categorie as $category) {
     $id = $category->getId();
     $name = $webpage->escapeString($category->getDescription());
     $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name</a></p>");
-}
-
-$webpage->appendContent("Catégories");
-foreach ($Gender as $gender) {
-    $id = $gender->getId();
-    $name = $webpage->escapeString($gender->getDescription());
-    $webpage->appendContent("<p> <a href=\"genre.php?genreId=$id\">$name,'</a></p>");
 }
 
 echo $webpage->toHTML();
