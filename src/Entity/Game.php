@@ -249,6 +249,18 @@ class Game
         $game->execute([':id' => $this->id]);
     }
 
+    public function insertGame(int $id ,string $name,int $releaseYear,string $shortDescription,int $price,bool $windows,bool $linux,bool $mac,?int $metacritic,?int $developerId,?int $posterId): void
+    {
+        $game = MyPdo::getInstance()->prepare(
+            <<<SQL
+            INSERT INTO game
+            VALUES (:id,:name,:releaseyear,:shortdescription,:price,:windows,:linux,:mac,:metacritic,:developerId,:posterId)
+            SQL
+        );
+        $game->execute(['id' => $id,'name' => $name,'releaseyear' => $releaseYear,'shortdescription' => $shortDescription,'price' => $price,'windows' => $windows,'linux' => $linux,'mac' => $mac,'metacritic' => $metacritic,'developerid' => $developerId,'posterid' => $posterId]);
+
+    }
+
 
 
 
