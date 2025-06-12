@@ -15,7 +15,7 @@ foreach ($game as $each) {
     $id = $each->getId();
     $name = $each->getName();
     $year = $each->getReleaseYear();
-    $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name,'</a></p>");
+    $webpage->appendContent("<p> <a href=\"game.php?gameId=$id\">$name</a></p>");
 }
 
 # Obtenir le genre dans le titre de la page
