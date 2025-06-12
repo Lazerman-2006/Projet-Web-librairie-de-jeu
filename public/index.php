@@ -24,10 +24,10 @@ foreach ($Gender as $gender) {
 
 $webpage->appendContent("<div class = category>");
 $webpage->appendContent("<h1>Catégories</h1>\n");
-foreach ($Gender as $gender) {
-    $id = $gender->getId();
-    $name = $webpage->escapeString($gender->getDescription());
-    $webpage->appendContent("<p> <a href=\"genre.php?genreId=$id\">$name</a></p>\n");
+foreach ($Categorie as $cat) {
+    $id = $cat->getId();
+    $name = $webpage->escapeString($cat->getDescription());
+    $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name</a></p>\n");
 }
 $webpage->appendContent("</div>");
 
