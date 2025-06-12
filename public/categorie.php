@@ -10,7 +10,9 @@ $webpage = new AppWebPage("Jeux vidéos : la catégorie");
 $categorieId = (int) $_GET['categorieId'];
 
 $game = GameCategoryCollection::findGameByCategoryId($categorieId);
-
+$webpage->appendContent('<div class="bouton">');
+$webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
+$webpage->appendContent('</div>');
 foreach ($game as $each) {
     $id = $each->getId();
     $name = $each->getName();
