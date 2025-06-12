@@ -30,11 +30,12 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    width: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    width: auto;
+    height: auto;
 }
 
 .jeux a {
@@ -48,6 +49,7 @@ body {
     padding-top: 2%;
     text-align: center;
     justify-content: center;
+
 }
 
 
@@ -80,6 +82,21 @@ body {
     align-items: center;
 }
 
+.genre_game{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.genre_game p:nth-child(even){
+    display: flex;
+    flex-direction: row-reverse;
+}
+.genre_game p:nth-child(odd){
+    display: flex;
+    flex-direction: row;
+}
+
 @media (orientation: landscape) {
 
     .jeux {
@@ -87,10 +104,9 @@ body {
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 15px;
-        justify-content: center;
-        display: flex;
+        justify-content: flex-start;
         flex-direction: row;
-        align-items: flex-start;
+        display: flex;
         width: auto;
         height: auto;
 
