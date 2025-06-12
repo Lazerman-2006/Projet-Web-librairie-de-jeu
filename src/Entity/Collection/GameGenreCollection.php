@@ -5,6 +5,9 @@ namespace Entity;
 use Database\MyPdo;
 use PDO;
 
+/**
+ * Permet de récupérer de tout ce qui concerne la table game_genre
+ */
 class GameGenreCollection
 {
 
@@ -38,6 +41,12 @@ class GameGenreCollection
     }
 
 
+    /**
+     * Permet de récupérer les id de genre avec l'id de jeux
+     *
+     * @param int $gameId
+     * @return array
+     */
     public static function findGenreIdByGameId(int $gameId): array
     {
         $category = MyPdo::getInstance()->prepare(
