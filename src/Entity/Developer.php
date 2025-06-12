@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 namespace Entity;
+use Database\MyPdo;
+use PDO;
+
 /**
  * Class Developer qui représente les developer des jeux vidéos
  */
@@ -47,6 +50,21 @@ class Developer
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    public static function findById(int $id): ?Developer
+    {
+        $dev = MyPdo::getInstance()->prepare(
+            <<<SQL
+        SELECT id, name
+        FROM developer
+        WHERE id = :id
+        SQL
+        );
+        $dev->execute([':id' => $id]);
+
+        $dev->setFetchMode(PDO::FETCH_CLASS, Developer::class);
+        return $dev->fetch() ?: null;
     }
 
 
