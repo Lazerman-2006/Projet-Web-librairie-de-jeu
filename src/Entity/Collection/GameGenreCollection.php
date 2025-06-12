@@ -15,16 +15,16 @@ class GameGenreCollection
      */
     public static function findGameByGenreId(int $genreId, string $orderBy = 'title'): array
     {
-        // Sécurisation du tri
+        // Vérifier l'ordre demandé
         $allowedOrders = ['title', 'year'];
         if (!in_array($orderBy, $allowedOrders)) {
-            $orderBy = 'title'; // Défaut : tri par titre
+            $orderBy = 'title';
         }
 
-        // Détermination de la colonne de tri
-        $orderColumn = ($orderBy === 'year') ? 'g.release_year' : 'g.name';
+        // Déterminer la colonne à utiliser
+        $orderColumn = ($orderBy === 'year') ? 'g.releaseYear' : 'g.name'; // Remplace `release_date` par le vrai nom
 
-        // Préparation et exécution de la requête
+        // Construire la requête avec la colonne correcte
         $stmt = MyPdo::getInstance()->prepare("
         SELECT g.*
         FROM game g
