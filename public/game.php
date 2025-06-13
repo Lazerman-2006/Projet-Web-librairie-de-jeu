@@ -10,9 +10,7 @@ use Entity\Collection\GenderCollection;
 use Entity\GameGenreCollection;
 use Entity\Poster;
 
-/**
- *  Permet d'afficher la page Genre (Affiche tout les jeux qui font partie d'un genre)
- */
+
 $webpage = new AppWebPage();
 
 
@@ -21,55 +19,28 @@ if ($gameId === null || $gameId <= 0) {
     die("Genre ID invalide.");
 }
 
-$webpage->appendContent("<a href=\"game_delete.php?gameId=$gameId\">Supprimer</a>");
+
 
 $games = GameCollection::findByGameId($gameId);
 foreach ($games as $game) {
     $id = $game->getId();
 
-    #Name
+    $webpage->appendContent("<div class = 'game_page'>");
+    $webpage->appendContent("<div class = 'buton'>");
     $name = $webpage->escapeString($game->getName());
     $webpage->setTitle("Jeux vidéos : $name");
-    $webpage->appendContent("<div class = 'game_page'>");
-    #Prix
 
-    $webpage->appendContent("<div class = 'price'><p>{$game->getPrice()}</p></div> \n ");
 
-    # Poster
+    $webpage->appendContent("<a href=\"game_delete.php?gameId=$gameId\">Supprimer</a>");
+    $webpage->appendContent("</div>");
 
+    $webpage->appendContent("<div class = 'image'>");
     $poster = Poster::findById($game->getPosterId());
     $jpeg = $poster->getJpeg();
     $base64 = base64_encode($jpeg);
     $image = '<img src="data:image/jpeg;base64,' . $base64 . '" alt="Poster">';
     $webpage->appendContent($image);
-
-    #Annee publication :
-
-    $webpage->appendContent("<div class = 'year'><p>{$game->getReleaseYear()}</p></div>\n ");
-
-    #Developpeur
-
-
-    $dev = \Entity\Developer::findById($game->getId());
-
-    if ($dev) {
-        $webpage->appendContent("<div class = 'name'><p>{$dev->getName()}</p>\n");
-    } else {
-        $webpage->appendContent("Développeur inconnu");
-    }
-
-    # Note
-    if ($game->getMetacritic()) {
-        $webpage->appendContent("<div class = 'meta'><p>{$game->getMetacritic()}</p></div>\n");
-    } else {
-        $webpage->appendContent("Pas de note");
-    }
-
-    #Description
-
-    $webpage->appendContent("<div class = 'desc'><p>{$game->getShortDescription()}</p></div>\n");
-
-    # Plateforme
+    $webpage->appendContent("</div>");
 
     $webpage->appendContent("<div class = platform>");
     $icons = '';
@@ -83,16 +54,37 @@ foreach ($games as $game) {
     if ($game->isMac()) {
         $icons .= '<img src="svg/apple.svg" alt="Mac" style="width: 40px;">';
     }
-
-    $webpage->appendContent($icons);
+    $webpage->appendContent("<div>$icons</div>");
+    $webpage->appendContent("<p>{$game->getReleaseYear()}</p>\n");
     $webpage->appendContent("</div>");
 
+    $dev = \Entity\Developer::findById($game->getId());
+
+    if ($dev) {
+        $webpage->appendContent("<div class = 'name'><p>{$dev->getName()}</p>\n");
+    } else {
+        $webpage->appendContent("Développeur inconnu");
+    }
+
+    $webpage->appendContent("<div class = data>");
+
+    $price = $game->getPrice()/100;
+    $webpage->appendContent("<div><p>{$price}€</p></div> \n ");
+
+    if ($game->getMetacritic()) {
+        $webpage->appendContent("<div><p>{$game->getMetacritic()}</p></div>\n");
+    } else {
+        $webpage->appendContent("<div><p>Pas de Note</p></div>\n");
+    }
+
+    $webpage->appendContent("</div>");
     # Affichage cat et genres
 
 
+    $webpage->appendContent("<div class = 'desc'><p>{$game->getShortDescription()}</p></div>\n");
     $webpage->appendContent("<div class = game_category>");
     $game = GameCategoryCollection::findCategoryIdByGameId($gameId);
-    $webpage->appendContent("Categorie");
+    $webpage->appendContent("<div class = category_name><p>Categorie: </p></div>");
     foreach ($game as $gamesCat) {
         $id = $gamesCat->getId();
         $name = $webpage->escapeString($gamesCat->getDescription());
@@ -101,7 +93,7 @@ foreach ($games as $game) {
     $webpage->appendContent("</div>");
 
     $webpage->appendContent("<div class = game_genre>");
-    $webpage->appendContent("Genres");
+    $webpage->appendContent("<div class = genre_name><p>Genres: </p></div>");
     $game = GameGenreCollection::findGenreIdByGameId($gameId);
     foreach ($game as $gamesGenre) {
         $id = $gamesGenre->getId();
