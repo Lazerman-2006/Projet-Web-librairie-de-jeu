@@ -16,6 +16,10 @@
 
         }
     },
+    "scripts_linux": {
+        "start:linux" : "bin/run-server.sh",
+        "process-timeout" : 0
+    },
     "scripts": {
         "start:linux": ["bash bin/run-server.sh"],
         "start:windows": ["bin/run-server.bat"],
