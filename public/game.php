@@ -21,8 +21,12 @@ if ($gameId === null || $gameId <= 0) {
     die("Genre ID invalide.");
 }
 
-$games = GameCollection::findByGameId($gameId);
+$webpage->appendContent("<a href=\"game_delete.php?gameId=$gameId\">Supprimer</a>");
 
+
+
+
+$games = GameCollection::findByGameId($gameId);
 foreach ($games as $game) {
     $id = $game->getId();
 
