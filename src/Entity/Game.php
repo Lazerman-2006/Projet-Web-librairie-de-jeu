@@ -217,7 +217,7 @@ class Game
      * Permet d'obtenir l'identifiant de l'affiche.
      * @return int L'id de l'affiche.
      */
-    public function getPosterId(): int
+    public function getPosterId(): ?int
     {
         return $this->posterId;
     }
@@ -267,7 +267,7 @@ class Game
      * @param int|null $posterId
      * @return void
      */
-    public function insertGame(int $id ,string $name,int $releaseYear,string $shortDescription,int $price,bool $windows,bool $linux,bool $mac,?int $metacritic,?int $developerId,?int $posterId): void
+    public function insertGame(int $id ,string $name,int $releaseYear,string $shortDescription,int $price,int $windows,int $linux,int $mac,?int $metacritic,?int $developerId,?int $posterId): void
     {
         $game = MyPdo::getInstance()->prepare(
             <<<SQL
@@ -275,19 +275,31 @@ class Game
             VALUES (:id,:name,:releaseyear,:shortdescription,:price,:windows,:linux,:mac,:metacritic,:developerId,:posterId)
             SQL
         );
-        $game->execute(['id' => $id,'name' => $name,'releaseyear' => $releaseYear,'shortdescription' => $shortDescription,'price' => $price,'windows' => $windows,'linux' => $linux,'mac' => $mac,'metacritic' => $metacritic,'developerid' => $developerId,'posterid' => $posterId]);
+        $game->execute(['id' => $id,'name' => $name,'releaseyear' => $releaseYear,'shortdescription' => $shortDescription,'price' => $price,'windows' => $windows,'linux' => $linux,'mac' => $mac,'metacritic' => $metacritic,'developerId' => $developerId,'posterId' => $posterId]);
 
     }
 
     /**
-     * Permet de mettre à jour la page d'un jeu
+     * Requête d'insertion pour category et genre lors de la création d'un jeu
      *
      * @return void
      */
-    public function updateGame(): void
+    public function insertGameCategory(int $gameId, int $categoryId): void
     {
-
+        $stmt = MyPdo::getInstance()->prepare(
+            "INSERT INTO game_category (gameId, categoryId) VALUES (:gameId, :categoryId)"
+        );
+        $stmt->execute(['gameId' => $gameId, 'categoryId' => $categoryId]);
     }
+
+    public function insertGameGenre(int $gameId, int $genreId): void
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            "INSERT INTO game_genre (gameId, genreId) VALUES (:gameId, :genreId)"
+        );
+        $stmt->execute(['gameId' => $gameId, 'genreId' => $genreId]);
+    }
+
 
 
 
