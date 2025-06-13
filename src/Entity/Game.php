@@ -16,9 +16,9 @@ class Game
     private int $releaseYear = 0;
     private string $shortDescription = "";
     private int $price = 0;
-    private bool $windows = false;
-    private bool $linux = false;
-    private bool $mac = false;
+    private int $windows = 0;
+    private int $linux = 0;
+    private int $mac = 0;
     private ?int $metacritic = null;
     private ?int $developerId = null;
     private ?int $posterId = null;
@@ -122,7 +122,7 @@ class Game
      * Indique si le jeu est compatible Windows.
      * @return bool Vrai si compatible Windows, faux sinon.
      */
-    public function isWindows(): bool
+    public function isWindows(): int
     {
         return $this->windows;
     }
@@ -132,7 +132,7 @@ class Game
      * @param bool $windows Vrai si compatible, faux sinon.
      * @return void
      */
-    public function setWindows(bool $windows): void
+    public function setWindows(int $windows): void
     {
         $this->windows = $windows;
     }
@@ -141,7 +141,7 @@ class Game
      * Indique si le jeu est compatible Linux.
      * @return bool Vrai si compatible Linux, faux sinon.
      */
-    public function isLinux(): bool
+    public function isLinux(): int
     {
         return $this->linux;
     }
@@ -151,7 +151,7 @@ class Game
      * @param bool $linux Vrai si compatible, faux sinon.
      * @return void
      */
-    public function setLinux(bool $linux): void
+    public function setLinux(int $linux): void
     {
         $this->linux = $linux;
     }
@@ -160,7 +160,7 @@ class Game
      * Indique si le jeu est compatible Mac.
      * @return bool Vrai si compatible Mac, faux sinon.
      */
-    public function isMac(): bool
+    public function isMac(): int
     {
         return $this->mac;
     }
@@ -170,7 +170,7 @@ class Game
      * @param bool $mac Vrai si compatible, faux sinon.
      * @return void
      */
-    public function setMac(bool $mac): void
+    public function setMac(int $mac): void
     {
         $this->mac = $mac;
     }
@@ -238,16 +238,17 @@ class Game
      *
      * @return void
      */
-    public static function deleteGame($id): void
+    public function delete(): void
     {
-        $game = MyPdo::getInstance()->prepare(
+        $stmt = MyPdo::getInstance()->prepare(
             <<<SQL
-            DELETE FROM game
-            WHERE id = :id
-            SQL
+        DELETE FROM game
+        WHERE id = :id
+        SQL
         );
-        $game->execute([':id' => $id]);
+        $stmt->execute([':id' => $this->id]);
     }
+
 
     /**
      *

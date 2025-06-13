@@ -34,6 +34,28 @@ class GameCollection
         return $stmt->fetchAll(PDO::FETCH_CLASS, Game::class);
     }
 
+    public static function findById(int $gameId): Game
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            <<<'SQL'
+        SELECT id
+        FROM game
+        WHERE id = :gameId
+        SQL
+        );
+
+        $stmt->execute(['gameId' => $gameId]);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, Game::class);
+        $game = $stmt->fetch();
+
+        if (!$game) {
+            throw new \Entity\Exception\EntityNotFoundException("Aucun jeu trouvé avec l'ID $gameId");
+        }
+
+        return $game;
+    }
+
     /**
      * Permet de récupérer la totalité des jeux
      *

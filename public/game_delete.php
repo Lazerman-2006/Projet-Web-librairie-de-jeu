@@ -1,35 +1,23 @@
 <?php
-
 declare(strict_types=1);
 
-use Html\WebPage;
+nameSpace public;
+
 use Entity\Collection\GameCollection;
-use Entity\Game;
+use Entity\Exception\EntityNotFoundException;
+use Entity\Exception\ParameterException;
 
-$webpage = new WebPage("Supprimer un jeu");
+try {
+    if (empty($_GET['gameId']) || !ctype_digit($_GET['gameId'])) {
+        throw new ParameterException("Non, mauvais parametre");
 
-$gameId = (int) $_POST['gameId'];
-if ($gameId===Null)
-{
-    $games = GameCollection::findAllGame();
 
-    $webpage->appendContent("<form method='POST' action='game_delete.php'>");
-    $webpage->appendContent("<select name='gameId'>");
-    $webpage->appendContent("<option value=''>Choissisé un jeux à supprimer</option>");
-    foreach ($games as $game)
-    {
-        $webpage->appendContent("<option value='{$game->getId()}'>{$game->getName()}</option>");
+    } else {
+        $game = GameCollection::findById((int)$_GET['gameId']);
+        $game->delete();
+        header('Location: /index.php');
+        exit;
     }
-    $webpage->appendContent("</select>");
-    $webpage->appendContent("</form>");
+} catch (\Throwable $e) {
+    throw new EntityNotFoundException("Erreur : " . $e->getMessage());
 }
-else
-{
-    Game::deleteGame($gameId);
-    $webpage->appendContent("<p>Jeux supprimé avec succès</p>");
-    $webpage->appendContent("<a href=index.php>Revenir à la page d'acceuil</a>");
-}
-
-
-
-
