@@ -21,23 +21,31 @@ class GameCategoryCollection
      * @param int $categorieId
      * @return array
      */
-    public static function findGameByCategoryId(int $categorieId): array
+    public static function findGameByCategoryId(int $categoryId, string $orderBy = 'title'): array
     {
-        $game = MyPdo::getInstance()->prepare(
-            <<<'SQL'
-            SELECT *
-            FROM game
-            WHERE id in (SELECT gameid
-                         FROM game_category
-                         WHERE categoryid in (SELECT id
-                                              FROM category
-                                              WHERE id = :categorieId)) 
-            SQL
-        );
-        $game->execute(['categorieId' => $categorieId]);
+        // Vérifier l'ordre demandé
+        $allowedOrders = ['title', 'year'];
+        if (!in_array($orderBy, $allowedOrders)) {
+            $orderBy = 'title';
+        }
 
-        return $game->fetchAll(PDO::FETCH_CLASS, Game::class);
+        // Déterminer la colonne à utiliser
+        $orderColumn = ($orderBy === 'year') ? 'g.releaseYear' : 'g.name'; // Remplace `release_date` par le vrai nom
+
+        // Construire la requête avec la colonne correcte
+        $stmt = MyPdo::getInstance()->prepare("
+        SELECT g.*
+        FROM game g
+        INNER JOIN game_category gg ON g.id = gg.gameId
+        WHERE gg.categoryId = :categoryId
+        ORDER BY $orderColumn ASC
+    ");
+
+        $stmt->execute(['categoryId' => $categoryId]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, Game::class);
     }
+
+
 
     /**
      * Permet de récupérer les catégories avec l'id de jeu
