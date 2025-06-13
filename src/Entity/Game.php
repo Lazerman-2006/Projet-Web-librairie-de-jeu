@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Entity;
 
 use Database\MyPdo;
+use PDO;
 
 /**
  * Class Game qui représente un jeu vidéo.
@@ -284,7 +285,7 @@ class Game
      *
      * @return void
      */
-    public function insertGameCategory(int $gameId, int $categoryId): void
+    public static function insertGameCategory(int $gameId, int $categoryId): void
     {
         $stmt = MyPdo::getInstance()->prepare(
             "INSERT INTO game_category (gameId, categoryId) VALUES (:gameId, :categoryId)"
@@ -292,13 +293,79 @@ class Game
         $stmt->execute(['gameId' => $gameId, 'categoryId' => $categoryId]);
     }
 
-    public function insertGameGenre(int $gameId, int $genreId): void
+    public static function insertGameGenre(int $gameId, int $genreId): void
     {
         $stmt = MyPdo::getInstance()->prepare(
             "INSERT INTO game_genre (gameId, genreId) VALUES (:gameId, :genreId)"
         );
         $stmt->execute(['gameId' => $gameId, 'genreId' => $genreId]);
     }
+
+
+    /**
+     * @return void
+     * Permet de sauvegarder la table avant la modification
+     */
+    public function save(): void
+    {
+        $db = MyPDO::getInstance();
+        $stmt = $db->prepare("
+        UPDATE game SET
+            name = :name,
+            release_year = :releaseYear,
+            short_description = :shortDescription,
+            price = :price,
+            windows = :windows,
+            linux = :linux,
+            mac = :mac,
+            metacritic = :metacritic,
+            developer_id = :developerId,
+            poster_id = :posterId
+        WHERE id = :id
+    ");
+
+        $stmt->execute([
+            'name' => $this->name,
+            'releaseYear' => $this->releaseYear,
+            'shortDescription' => $this->shortDescription,
+            'price' => $this->price,
+            'windows' => $this->windows,
+            'linux' => $this->linux,
+            'mac' => $this->mac,
+            'metacritic' => $this->metacritic,
+            'developerId' => $this->developerId,
+            'posterId' => $this->posterId,
+            'id' => $this->id,
+        ]);
+    }
+
+
+    /**
+     * @param int $gameId
+     * @return void Permet de supprimer une categorie dans game_category
+     */
+    public static function deleteByGameIdCat(int $gameId): void
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            "DELETE FROM game_category WHERE gameId = :gameId"
+        );
+        $stmt->execute(['gameId' => $gameId]);
+    }
+
+
+    /**
+     * @param int $gameId
+     * @return void Permet de supprimer un genre dans game_genre
+     */
+    public static function deleteByGameIdGenre(int $gameId): void
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            "DELETE FROM game_category WHERE gameId = :gameId"
+        );
+        $stmt->execute(['gameId' => $gameId]);
+    }
+
+
 
 
 
