@@ -36,15 +36,21 @@ $game = GameCategoryCollection::findGameByCategoryId($categorieId, $orderBy);
 $webpage->appendContent("<div class = category_game>");
 //Boucle de création des balises pour chaques jeux
 foreach ($game as $each) {
-    $poster = Poster::findById($each->getPosterId());
-    $jpeg = $poster->getJpeg();
-    $base64 = base64_encode($jpeg);
-    $image = '<img src="data:image/jpeg;base64,' . $base64 . '" alt="Poster">';
+    $posterId = $each->getPosterId();
+    if ($posterId !== null) {
+        $poster = Poster::findById($posterId);
+        $jpeg = $poster->getJpeg();
+        $base64 = base64_encode($jpeg);
+        $image = '<img src="data:image/jpeg;base64,' . $base64 . '" alt="Poster">';
+    } else {
+        $image = '';
+    }
+
     $id = $each->getId();
     $name = $each->getName();
     $year = $each->getReleaseYear();
     $description = $each->getShortDescription();
-    $webpage->appendContent("<div class = game><p>{$image} <div class = name_desc><a href=\"game.php?gameId=$id\">$name $year </a><p>$description</p></div></p></div>");
+    $webpage->appendContent("<div class='game'><p>{$image} <div class='name_desc'><a href=\"game.php?gameId=$id\">$name $year</a><p>$description</p></div></p></div>");
 }
 $webpage->appendContent("</div>");
 
