@@ -34,6 +34,10 @@ foreach ($games as $game) {
     $webpage->appendContent("<a href=\"game_delete.php?gameId=$gameId\">Supprimer</a>");
     $webpage->appendContent("</div>");
 
+    $webpage->appendContent("<div class = box_3>");
+
+    $webpage->appendContent("<div class = box_1>");
+
     $webpage->appendContent("<div class = 'image'>");
     $poster = Poster::findById($game->getPosterId());
     $jpeg = $poster->getJpeg();
@@ -66,6 +70,10 @@ foreach ($games as $game) {
         $webpage->appendContent("Développeur inconnu");
     }
 
+    $webpage->appendContent("</div>");
+
+    $webpage->appendContent("<div class = box_2>");
+
     $webpage->appendContent("<div class = data>");
 
     $price = $game->getPrice()/100;
@@ -82,6 +90,8 @@ foreach ($games as $game) {
 
 
     $webpage->appendContent("<div class = 'desc'><p>{$game->getShortDescription()}</p></div>\n");
+    $webpage->appendContent("</div>");
+    $webpage->appendContent("</div>");
     $webpage->appendContent("<div class = game_category>");
     $game = GameCategoryCollection::findCategoryIdByGameId($gameId);
     $webpage->appendContent("<div class = category_name><p>Categorie: </p></div>");
@@ -103,7 +113,7 @@ foreach ($games as $game) {
     $webpage->appendContent("</div>");
 
     $webpage->appendContent('<div class="bouton_game">');
-    $webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
+    $webpage->appendContent('<a href="index.php">Retour à laccueil</a>');
     $webpage->appendContent('</div>');
     $webpage->appendContent("</div>");
 
