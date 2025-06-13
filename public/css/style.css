@@ -194,6 +194,7 @@ body {
 .platform {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .data{
     display: flex;
@@ -245,6 +246,10 @@ body {
     text-decoration: none;
     color: #171a21;
     font-size: 30px;
+}
+.platform div{
+    display: flex;
+    flex-direction: row;
 }
 
 
