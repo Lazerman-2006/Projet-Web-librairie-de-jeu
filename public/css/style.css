@@ -26,7 +26,7 @@ body {
 
 
 .jeux {
-    background-color: #fff;
+    background-color: #c7d5e0;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 15px;
@@ -41,7 +41,7 @@ body {
 .jeux a {
     display: flex;
     text-decoration: none;
-    color: #66c0f4;
+    color: #171a21;
     font-weight: bold;
     border : solid;
     border-radius: 10px;
@@ -54,8 +54,8 @@ body {
 
 
 .header {
-    background-color: #6200ea;
-    color: #fff;
+    background-color: #1b2838;
+    color: white;
     text-align: center;
     padding: 20px;
     font-size: 24px;
@@ -85,27 +85,27 @@ body {
 .genre_game {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Ajoute un espace entre chaque jeu */
+    gap: 20px;
 }
 
 .genre_game .game {
     display: flex;
     align-items: center;
-    gap: 20px; /* Espacement entre texte et image */
+    gap: 20px;
 }
 
 .genre_game .game:nth-child(even) {
-    flex-direction: row-reverse; /* Inverse l'ordre pour les jeux pairs */
+    flex-direction: row-reverse;
 }
 
 .genre_game .game:nth-child(odd) {
-    flex-direction: row; /* Garde l'ordre normal pour les jeux impairs */
+    flex-direction: row;
 }
 
 .game img {
-    width: 150px; /* Ajuste la taille des images */
+    width: 300px;
     height: auto;
-    border-radius: 10px; /* Ajoute un effet arrondi aux images */
+    border-radius: 10px;
 }
 
 .game p {
@@ -113,8 +113,87 @@ body {
     padding: 10px;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+
 }
+
+.category_game {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.category_game .game {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.category_game .game:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.category_game .game:nth-child(odd) {
+    flex-direction: row;
+}
+.sort-menu {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: fit-content;
+}
+
+.sort-menu label {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-menu input[type="radio"] {
+    accent-color: #171a21; /* Couleur personnalisée des boutons radio */
+}
+
+.sort-menu button {
+    background-color: #1b2838;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+
+
+.bouton {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.bouton a {
+    border: none;
+}
+
+.bouton button {
+    display: inline-block;
+    background-color: #1b2838;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+
+
+
 
 @media (orientation: landscape) {
 
@@ -128,7 +207,7 @@ body {
         width: auto;
         height: auto;
         align-items: flex-start;
-        gap: 700px;
+        gap: 400px;
 
     }
 }
