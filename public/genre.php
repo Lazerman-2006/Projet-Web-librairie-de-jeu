@@ -14,20 +14,20 @@ use Entity\Poster;
 $webpage = new AppWebPage();
 
 $Gender = GenderCollection::findAllGender();
-$webpage->appendContent('<div class="bouton">');
+
+$webpage->appendContent('<div class="genre_game">');
 $webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
-$webpage->appendContent('</div>');
 $genreId = isset($_GET['genreId']) ? (int) $_GET['genreId'] : null;
 if ($genreId === null || $genreId <= 0) {
     die("Genre ID invalide.");
 }
-
 $webpage->appendContent('<form method="GET" class="sort-menu">');
 $webpage->appendContent('<input type="hidden" name="genreId" value="' . $genreId . '">'); // Ajoute genreId
 $webpage->appendContent('<label><input type="radio" name="orderBy" value="title" checked> Trier par titre</label>');
 $webpage->appendContent('<label><input type="radio" name="orderBy" value="year"> Trier par année</label>');
 $webpage->appendContent('<button type="submit">Appliquer le tri</button>');
 $webpage->appendContent('</form>');
+$webpage->appendContent('</div>');
 $orderBy = $_GET['orderBy'] ?? 'title'; // Récupère l'option de tri
 
 
@@ -44,7 +44,9 @@ foreach ($games as $game) {
     $name = $webpage->escapeString($game->getName());
     $year = $game->getReleaseYear();
     $description = $game->getShortDescription();
-    $webpage->appendContent("<div><p>{$image} <a href=\"game.php?gameId=$id\">$name $year </a></div>$description</p>");
+    //temporaire
+    $description = "1";
+    $webpage->appendContent("<div class = game><p>{$image} <div class = name_desc><a href=\"game.php?gameId=$id\">$name $year </a><p>$description</p></div></p></div>");
 }
 
 $webpage->appendContent("</div>");
