@@ -7,15 +7,17 @@ use Entity\Collection\CategorieCollection;
 use Entity\Collection\GameCategoryCollection;
 use Entity\Poster;
 
+//Création de la page des genres
 $webpage = new AppWebPage();
-$cat= CategorieCollection::findAllCategorie();
+
+//Ajoute les bouton de tri par nom et pas année
 $webpage->appendContent('<div class="bouton">');
 $webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
 $categorieId = isset($_GET['categorieId']) ? (int) $_GET['categorieId'] : null;
 if ($categorieId === null || $categorieId <= 0) {
     die("categorieId invalide.");
 }
-
+//Formulaire des boutons
 $webpage->appendContent('<form method="GET" class="sort-menu">');
 $webpage->appendContent('<input type="hidden" name="categorieId" value="' . $categorieId . '">'); // Ajoute genreId
 $webpage->appendContent('<label><input type="radio" name="orderBy" value="title" checked> Trier par titre</label>');
@@ -23,14 +25,16 @@ $webpage->appendContent('<label><input type="radio" name="orderBy" value="year">
 $webpage->appendContent('<button type="submit">Appliquer le tri</button>');
 $webpage->appendContent('</form>');
 $webpage->appendContent('</div>');
-$orderBy = $_GET['orderBy'] ?? 'title'; // Récupère l'option de tri
+// Récupère l'option de tri
+$orderBy = $_GET['orderBy'] ?? 'title';
 
 
-
+//Récupère la totalité des jeux de la catégorie sélectionné
 $game = GameCategoryCollection::findGameByCategoryId($categorieId, $orderBy);
 
-
+//Création de la liste des jeux
 $webpage->appendContent("<div class = category_game>");
+//Boucle de création des balises pour chaques jeux
 foreach ($game as $each) {
     $poster = Poster::findById($each->getPosterId());
     $jpeg = $poster->getJpeg();
@@ -44,9 +48,9 @@ foreach ($game as $each) {
 }
 $webpage->appendContent("</div>");
 
-# Obtenir le genre dans le titre de la page
+//Récupère la cétgorie pour le mettre dans le titre de la page
 $category = \Entity\Categorie::findDescById($categorieId);
 $webpage->setTitle("Jeux vidéos : $category");
 
-
+//Affichage de la page
 echo $webpage->toHTML();
