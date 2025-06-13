@@ -15,7 +15,7 @@ $webpage = new AppWebPage();
 
 $Gender = GenderCollection::findAllGender();
 
-$webpage->appendContent('<div class="genre_game">');
+$webpage->appendContent('<div class="bouton">');
 $webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
 $genreId = isset($_GET['genreId']) ? (int) $_GET['genreId'] : null;
 if ($genreId === null || $genreId <= 0) {
@@ -44,8 +44,6 @@ foreach ($games as $game) {
     $name = $webpage->escapeString($game->getName());
     $year = $game->getReleaseYear();
     $description = $game->getShortDescription();
-    //temporaire
-    $description = "1";
     $webpage->appendContent("<div class = game><p>{$image} <div class = name_desc><a href=\"game.php?gameId=$id\">$name $year </a><p>$description</p></div></p></div>");
 }
 
