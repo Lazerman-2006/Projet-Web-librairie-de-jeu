@@ -82,19 +82,38 @@ body {
     align-items: center;
 }
 
-.genre_game{
+.genre_game {
     display: flex;
     flex-direction: column;
-
+    gap: 20px; /* Ajoute un espace entre chaque jeu */
 }
 
-.genre_game p:nth-child(even){
+.genre_game .game {
     display: flex;
-    flex-direction: row-reverse;
+    align-items: center;
+    gap: 20px; /* Espacement entre texte et image */
 }
-.genre_game p:nth-child(odd){
-    display: flex;
-    flex-direction: row;
+
+.genre_game .game:nth-child(even) {
+    flex-direction: row-reverse; /* Inverse l'ordre pour les jeux pairs */
+}
+
+.genre_game .game:nth-child(odd) {
+    flex-direction: row; /* Garde l'ordre normal pour les jeux impairs */
+}
+
+.game img {
+    width: 150px; /* Ajuste la taille des images */
+    height: auto;
+    border-radius: 10px; /* Ajoute un effet arrondi aux images */
+}
+
+.game p {
+    margin: 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 @media (orientation: landscape) {
@@ -104,18 +123,12 @@ body {
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 15px;
-        justify-content: flex-start;
         flex-direction: row;
         display: flex;
         width: auto;
         height: auto;
+        align-items: flex-start;
+        gap: 700px;
 
     }
-
-
-
-
-
-
-
 }

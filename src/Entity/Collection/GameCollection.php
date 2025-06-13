@@ -20,7 +20,7 @@ class GameCollection
      * @param int $gameId
      * @return Game
      */
-    public static function findByGameId(int $gameId): Game
+    public static function findByGameId(int $gameId): Array
     {
         $stmt = MyPdo::getInstance()->prepare(
             <<<'SQL'
