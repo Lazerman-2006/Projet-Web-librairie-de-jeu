@@ -33,11 +33,6 @@ foreach ($games as $game) {
     $webpage->appendContent("<div class = box_1>");
 
     $webpage->appendContent("<div class = 'image'>");
-    $poster = Poster::findById($game->getPosterId());
-    $jpeg = $poster->getJpeg();
-    $base64 = base64_encode($jpeg);
-    $image = '<img src="data:image/jpeg;base64,' . $base64 . '" alt="Poster">';
-    $webpage->appendContent($image);
 
     $posterId = $game->getPosterId();
     if ($posterId !== null) {
@@ -51,7 +46,6 @@ foreach ($games as $game) {
     }
     // Sinon on n'affiche rien (pas d'image)
 
->>>>>>> public/game.php
     $webpage->appendContent("</div>");
 
     $webpage->appendContent("<div class='platform'>");
@@ -66,20 +60,20 @@ foreach ($games as $game) {
     if ($game->isMac()) {
         $icons .= '<img src="svg/apple.svg" alt="Mac" style="width: 40px;">';
     }
-    $webpage->appendContent("<div>$icons</div>");
-    $webpage->appendContent("<p>{$game->getReleaseYear()}</p>");
+    $webpage->appendContent("<div><p>Plaform: </p>$icons</div>");
+    $webpage->appendContent("<p>Année de sortie: {$game->getReleaseYear()}</p>");
     $webpage->appendContent("</div>");
 
     $developerId = $game->getDeveloperId();
     if ($developerId !== null) {
         $dev = \Entity\Developer::findById($developerId);
         if ($dev) {
-            $webpage->appendContent("<div class='name'><p>" . $webpage->escapeString($dev->getName()) . "</p></div>");
+            $webpage->appendContent("<div class='name'><p> Déveuloppeur: {$webpage->escapeString($dev->getName())} </p></div>");
         } else {
-            $webpage->appendContent("<div class='name'><p>Développeur inconnu</p></div>");
+            $webpage->appendContent("<div class='name'><p>Déveuloppeur: Développeur inconnu</p></div>");
         }
     } else {
-        $webpage->appendContent("<div class='name'><p>Développeur inconnu</p></div>");
+        $webpage->appendContent("<div class='name'><p>Déveuloppeur: Développeur inconnu</p></div>");
     }
 
 
@@ -91,12 +85,12 @@ foreach ($games as $game) {
 
 
     $price = $game->getPrice() / 100;
-    $webpage->appendContent("<div><p>{$price}€</p></div>");
+    $webpage->appendContent("<div><p>Prix : {$price}€</p></div>");
 
     if ($game->getMetacritic() !== null) {
-        $webpage->appendContent("<div><p>{$game->getMetacritic()}</p></div>");
+        $webpage->appendContent("<div><p>Note: {$game->getMetacritic()}</p></div>");
     } else {
-        $webpage->appendContent("<div><p>Pas de Note</p></div>");
+        $webpage->appendContent("<div><p>Note: Pas de Note</p></div>");
     }
 
     $webpage->appendContent("</div>");
