@@ -53,6 +53,7 @@ class GameCategoryCollection
      * @param int $gameId
      * @return array
      */
+
     public static function findCategoryIdByGameId(int $gameId): array
     {
         $category = MyPdo::getInstance()->prepare(
