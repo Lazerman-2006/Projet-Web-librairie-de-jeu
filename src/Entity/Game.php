@@ -198,7 +198,7 @@ class Game
      * Permet d'obtenir l'identifiant du développeur.
      * @return int L'id du développeur.
      */
-    public function getDeveloperId(): int
+    public function getDeveloperId(): ?int
     {
         return $this->developerId;
     }
