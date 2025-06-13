@@ -28,8 +28,16 @@ foreach ($games as $game) {
 
     $webpage->appendContent("<a href=\"Form/game_delete.php?gameId=$gameId\">Supprimer</a>");
     $webpage->appendContent("</div>");
+    $webpage->appendContent("<div class = box_3>");
 
-    $webpage->appendContent("<div class='image'>");
+    $webpage->appendContent("<div class = box_1>");
+
+    $webpage->appendContent("<div class = 'image'>");
+    $poster = Poster::findById($game->getPosterId());
+    $jpeg = $poster->getJpeg();
+    $base64 = base64_encode($jpeg);
+    $image = '<img src="data:image/jpeg;base64,' . $base64 . '" alt="Poster">';
+    $webpage->appendContent($image);
 
     $posterId = $game->getPosterId();
     if ($posterId !== null) {
@@ -43,6 +51,7 @@ foreach ($games as $game) {
     }
     // Sinon on n'affiche rien (pas d'image)
 
+>>>>>>> public/game.php
     $webpage->appendContent("</div>");
 
     $webpage->appendContent("<div class='platform'>");
@@ -73,7 +82,13 @@ foreach ($games as $game) {
         $webpage->appendContent("<div class='name'><p>Développeur inconnu</p></div>");
     }
 
-    $webpage->appendContent("<div class='data'>");
+
+    $webpage->appendContent("</div>");
+
+    $webpage->appendContent("<div class = box_2>");
+
+    $webpage->appendContent("<div class = data>");
+
 
     $price = $game->getPrice() / 100;
     $webpage->appendContent("<div><p>{$price}€</p></div>");
@@ -86,15 +101,19 @@ foreach ($games as $game) {
 
     $webpage->appendContent("</div>");
 
-    // Affichage catégories
-    $webpage->appendContent("<div class='desc'><p>" . $webpage->escapeString($game->getShortDescription()) . "</p></div>");
-    $webpage->appendContent("<div class='game_category'>");
-    $categories = GameCategoryCollection::findCategoryIdByGameId($gameId);
-    $webpage->appendContent("<div class='category_name'><p>Catégorie(s): </p></div>");
-    foreach ($categories as $cat) {
-        $catId = $cat->getId();
-        $catName = $webpage->escapeString($cat->getDescription());
-        $webpage->appendContent("<p><a href=\"categorie.php?categorieId=$catId\">$catName</a></p>");
+
+
+    $webpage->appendContent("<div class = 'desc'><p>{$game->getShortDescription()}</p></div>\n");
+    $webpage->appendContent("</div>");
+    $webpage->appendContent("</div>");
+    $webpage->appendContent("<div class = game_category>");
+    $game = GameCategoryCollection::findCategoryIdByGameId($gameId);
+    $webpage->appendContent("<div class = category_name><p>Categorie: </p></div>");
+    foreach ($game as $gamesCat) {
+        $id = $gamesCat->getId();
+        $name = $webpage->escapeString($gamesCat->getDescription());
+        $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name</a></p>\n");
+
     }
     $webpage->appendContent("</div>");
 
@@ -110,7 +129,7 @@ foreach ($games as $game) {
     $webpage->appendContent("</div>");
 
     $webpage->appendContent('<div class="bouton_game">');
-    $webpage->appendContent('<a href="index.php"><button>Retour à l\'accueil</button></a>');
+    $webpage->appendContent('<a href="index.php">Retour à laccueil</a>');
     $webpage->appendContent('</div>');
     $webpage->appendContent("</div>");
 }
