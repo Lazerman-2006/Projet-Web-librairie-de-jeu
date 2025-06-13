@@ -16,9 +16,15 @@
 
         }
     },
+    "scripts_linux": {
+        "start:linux" : "bin/run-server.sh",
+        "process-timeout" : 0
+    },
     "scripts": {
         "start:linux": ["bash bin/run-server.sh"],
         "start:windows": ["bin/run-server.bat"],
-        "start": ["composer start:linux"]
+        "start": ["composer start:linux"],
+        "test:cs" : "php vendor/bin/php-cs-fixer fix --dry-run --diff",
+        "fix:cs": "php vendor/bin/php-cs-fixer fix"
     }
 }
