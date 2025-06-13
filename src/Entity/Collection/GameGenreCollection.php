@@ -69,4 +69,7 @@ class GameGenreCollection
 
         return $category->fetchAll(PDO::FETCH_CLASS, Categorie::class);
     }
+
+
 }
+
