@@ -8,11 +8,9 @@ use Entity\Collection\GameCategoryCollection;
 use Entity\Poster;
 
 $webpage = new AppWebPage();
-
 $cat= CategorieCollection::findAllCategorie();
 $webpage->appendContent('<div class="bouton">');
 $webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
-$webpage->appendContent('</div>');
 $categorieId = isset($_GET['categorieId']) ? (int) $_GET['categorieId'] : null;
 if ($categorieId === null || $categorieId <= 0) {
     die("categorieId invalide.");
@@ -24,7 +22,9 @@ $webpage->appendContent('<label><input type="radio" name="orderBy" value="title"
 $webpage->appendContent('<label><input type="radio" name="orderBy" value="year"> Trier par année</label>');
 $webpage->appendContent('<button type="submit">Appliquer le tri</button>');
 $webpage->appendContent('</form>');
+$webpage->appendContent('</div>');
 $orderBy = $_GET['orderBy'] ?? 'title'; // Récupère l'option de tri
+
 
 
 $game = GameCategoryCollection::findGameByCategoryId($categorieId, $orderBy);
@@ -39,12 +39,14 @@ foreach ($game as $each) {
     $id = $each->getId();
     $name = $each->getName();
     $year = $each->getReleaseYear();
-    $webpage->appendContent("<p>{$image} <a href=\"game.php?gameId=$id\">$name $year</a></p>");
+    $description = $each->getShortDescription();
+    $webpage->appendContent("<div class = game><p>{$image} <div class = name_desc><a href=\"game.php?gameId=$id\">$name $year </a><p>$description</p></div></p></div>");
 }
 $webpage->appendContent("</div>");
 
 # Obtenir le genre dans le titre de la page
 $category = \Entity\Categorie::findDescById($categorieId);
 $webpage->setTitle("Jeux vidéos : $category");
+
 
 echo $webpage->toHTML();
