@@ -15,6 +15,11 @@ $Categorie = CategorieCollection::findAllCategorie();
 
 //récupération de tout les genres
 $Gender = GenderCollection::findAllGender();
+//Bouton création & modif"
+$webpage->appendToHead("<div class = formulaire>");
+$webpage->appendToHead("<a href=\"Form/game_add.php?\">Crée un jeu</a>");
+$webpage->appendToHead("<a href=\"Form/game_modif.php?\">Modifier un jeu</a>");
+$webpage->appendToHead("</div>");
 
 
 //Création de la liste des genres de jeux
