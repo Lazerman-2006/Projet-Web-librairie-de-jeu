@@ -11,8 +11,8 @@ use PDO;
  */
 class Developer
 {
-    private int $id;
-    private string $name;
+    private ?int $id;
+    private ?string $name;
 
     /** Permet d'avoir l'id d'un developer
      * @return int Retourne l'id de l'objet

@@ -10,39 +10,42 @@ use Entity\Collection\GenderCollection;
 use Entity\GameGenreCollection;
 use Entity\Poster;
 
-
 $webpage = new AppWebPage();
-
 
 $gameId = isset($_GET['gameId']) ? (int)$_GET['gameId'] : null;
 if ($gameId === null || $gameId <= 0) {
     die("Genre ID invalide.");
 }
 
-
-
 $games = GameCollection::findByGameId($gameId);
 foreach ($games as $game) {
     $id = $game->getId();
 
-    $webpage->appendContent("<div class = 'game_page'>");
-    $webpage->appendContent("<div class = 'buton'>");
+    $webpage->appendContent("<div class='game_page'>");
+    $webpage->appendContent("<div class='buton'>");
     $name = $webpage->escapeString($game->getName());
     $webpage->setTitle("Jeux vidéos : $name");
 
-
-    $webpage->appendContent("<a href=\"game_delete.php?gameId=$gameId\">Supprimer</a>");
+    $webpage->appendContent("<a href=\"Form/game_delete.php?gameId=$gameId\">Supprimer</a>");
     $webpage->appendContent("</div>");
 
-    $webpage->appendContent("<div class = 'image'>");
-    $poster = Poster::findById($game->getPosterId());
-    $jpeg = $poster->getJpeg();
-    $base64 = base64_encode($jpeg);
-    $image = '<img src="data:image/jpeg;base64,' . $base64 . '" alt="Poster">';
-    $webpage->appendContent($image);
+    $webpage->appendContent("<div class='image'>");
+
+    $posterId = $game->getPosterId();
+    if ($posterId !== null) {
+        $poster = Poster::findById($posterId);
+        if ($poster !== null) {
+            $jpeg = $poster->getJpeg();
+            $base64 = base64_encode($jpeg);
+            $image = '<img src="data:image/jpeg;base64,' . $base64 . '" alt="Poster">';
+            $webpage->appendContent($image);
+        }
+    }
+    // Sinon on n'affiche rien (pas d'image)
+
     $webpage->appendContent("</div>");
 
-    $webpage->appendContent("<div class = platform>");
+    $webpage->appendContent("<div class='platform'>");
     $icons = '';
 
     if ($game->isWindows()) {
@@ -55,58 +58,61 @@ foreach ($games as $game) {
         $icons .= '<img src="svg/apple.svg" alt="Mac" style="width: 40px;">';
     }
     $webpage->appendContent("<div>$icons</div>");
-    $webpage->appendContent("<p>{$game->getReleaseYear()}</p>\n");
+    $webpage->appendContent("<p>{$game->getReleaseYear()}</p>");
     $webpage->appendContent("</div>");
 
-    $dev = \Entity\Developer::findById($game->getId());
-
-    if ($dev) {
-        $webpage->appendContent("<div class = 'name'><p>{$dev->getName()}</p>\n");
+    $developerId = $game->getDeveloperId();
+    if ($developerId !== null) {
+        $dev = \Entity\Developer::findById($developerId);
+        if ($dev) {
+            $webpage->appendContent("<div class='name'><p>" . $webpage->escapeString($dev->getName()) . "</p></div>");
+        } else {
+            $webpage->appendContent("<div class='name'><p>Développeur inconnu</p></div>");
+        }
     } else {
-        $webpage->appendContent("Développeur inconnu");
+        $webpage->appendContent("<div class='name'><p>Développeur inconnu</p></div>");
     }
 
-    $webpage->appendContent("<div class = data>");
+    $webpage->appendContent("<div class='data'>");
 
-    $price = $game->getPrice()/100;
-    $webpage->appendContent("<div><p>{$price}€</p></div> \n ");
+    $price = $game->getPrice() / 100;
+    $webpage->appendContent("<div><p>{$price}€</p></div>");
 
-    if ($game->getMetacritic()) {
-        $webpage->appendContent("<div><p>{$game->getMetacritic()}</p></div>\n");
+    if ($game->getMetacritic() !== null) {
+        $webpage->appendContent("<div><p>{$game->getMetacritic()}</p></div>");
     } else {
-        $webpage->appendContent("<div><p>Pas de Note</p></div>\n");
+        $webpage->appendContent("<div><p>Pas de Note</p></div>");
     }
 
     $webpage->appendContent("</div>");
-    # Affichage cat et genres
 
-
-    $webpage->appendContent("<div class = 'desc'><p>{$game->getShortDescription()}</p></div>\n");
-    $webpage->appendContent("<div class = game_category>");
-    $game = GameCategoryCollection::findCategoryIdByGameId($gameId);
-    $webpage->appendContent("<div class = category_name><p>Categorie: </p></div>");
-    foreach ($game as $gamesCat) {
-        $id = $gamesCat->getId();
-        $name = $webpage->escapeString($gamesCat->getDescription());
-        $webpage->appendContent("<p> <a href=\"categorie.php?categorieId=$id\">$name</a></p>\n");
+    // Affichage catégories
+    $webpage->appendContent("<div class='desc'><p>" . $webpage->escapeString($game->getShortDescription()) . "</p></div>");
+    $webpage->appendContent("<div class='game_category'>");
+    $categories = GameCategoryCollection::findCategoryIdByGameId($gameId);
+    $webpage->appendContent("<div class='category_name'><p>Catégorie(s): </p></div>");
+    foreach ($categories as $cat) {
+        $catId = $cat->getId();
+        $catName = $webpage->escapeString($cat->getDescription());
+        $webpage->appendContent("<p><a href=\"categorie.php?categorieId=$catId\">$catName</a></p>");
     }
     $webpage->appendContent("</div>");
 
-    $webpage->appendContent("<div class = game_genre>");
-    $webpage->appendContent("<div class = genre_name><p>Genres: </p></div>");
-    $game = GameGenreCollection::findGenreIdByGameId($gameId);
-    foreach ($game as $gamesGenre) {
-        $id = $gamesGenre->getId();
-        $name = $webpage->escapeString($gamesGenre->getDescription());
-        $webpage->appendContent("<p> <a href=\"genre.php?genreId=$id\">$name</a></p>\n");
+    // Affichage genres
+    $webpage->appendContent("<div class='game_genre'>");
+    $webpage->appendContent("<div class='genre_name'><p>Genres: </p></div>");
+    $genres = GameGenreCollection::findGenreIdByGameId($gameId);
+    foreach ($genres as $genre) {
+        $genreId = $genre->getId();
+        $genreName = $webpage->escapeString($genre->getDescription());
+        $webpage->appendContent("<p><a href=\"genre.php?genreId=$genreId\">$genreName</a></p>");
     }
     $webpage->appendContent("</div>");
 
     $webpage->appendContent('<div class="bouton_game">');
-    $webpage->appendContent('<a href="index.php"><button>Retour à laccueil</button></a>');
+    $webpage->appendContent('<a href="index.php"><button>Retour à l\'accueil</button></a>');
     $webpage->appendContent('</div>');
     $webpage->appendContent("</div>");
-
-
-    echo $webpage->toHTML();
 }
+
+echo $webpage->toHTML();
