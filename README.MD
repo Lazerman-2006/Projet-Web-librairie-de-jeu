@@ -1,18 +1,8 @@
 
 # Projet API STEAM
-
 ---
 
-## 🚀 Membres du projet
-
-| Nom                  | Identifiant  |
-|----------------------|--------------|
-| FAGOT--NAUDE Amélien | fago0014     |
-| PIERRON Matteo       | pier0270     |
-
----
-
-## ⚙️ Initialisation du projet
+## Initialisation du projet
 
 Ce projet nécessite **Composer** pour gérer les dépendances.
 
@@ -31,7 +21,7 @@ composer dump-autoload
 
 ---
 
-## ▶️ Lancement du serveur web
+## Lancement du serveur web
 
 - **Windows**
 
@@ -49,7 +39,7 @@ composer start:linux
 
 ---
 
-## 📁 Contenu du projet
+## Contenu du projet
 
 Le projet s’appuie sur un extrait de l’API Steam pour afficher des informations sur les jeux vidéo.
 
@@ -83,7 +73,7 @@ Le projet s’appuie sur un extrait de l’API Steam pour afficher des informati
 
 ---
 
-## 📌 Fonctionnalités clés
+## Fonctionnalités clés
 
 - Navigation fluide entre genres, catégories et détails des jeux
 - Tri dynamique des listes de jeux par titre ou par année
@@ -91,7 +81,7 @@ Le projet s’appuie sur un extrait de l’API Steam pour afficher des informati
 
 ---
 
-## 📌 Formulaire
+## Formulaire
 
 ## 1. Formulaire de modification (game_modif.php)
 
@@ -161,7 +151,7 @@ L’utilisateur modifie ces données, puis soumet le formulaire en POST vers gam
 
 ---
 
-## 📌 Arboescence du projet
+## Arboescence du projet
 
 /bin  
 run-server.bat          # Script Windows pour démarrer le serveur  
